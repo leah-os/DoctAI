@@ -20,7 +20,7 @@ export default function Home() {
 
       </div>
 
-      <div className="mt-12 w-full max-w-lg">
+      <div className="mt-12 w-full">
         <div className="flex items-center border border-gray-300 rounded-full px-4 py-2">
           <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 10l4.55 2.27M4.27 8.27L5 10m0 0L2.27 4.27M4.27 15.73L5 14m0 0l-4.55 2.27M5 14l6.23 3.12m0 0l3.76 1.88M5 14v5m6.23-1.88L5 14m6.23 1.88L8 18.12M8 9m-3.77 6m2.27 1L12 15m5.23 2.12m2.27 1M8 15V9M12 9v6m5.23 2.12L17 15m0-6v4.55m0 0L8 9M5.23 9m0-2.12v5m2.77 2L7 14m3.76 1.88m0-2.77m3.76 1.88m-4.77 1.77m2.5-3.27L7 8.12"></path>
