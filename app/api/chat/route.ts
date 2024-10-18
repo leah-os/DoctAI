@@ -1,10 +1,10 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-const genAI = new GoogleGenerativeAI('AIzaSyAylqfEI9wcqCJ98m7ArH4A-GghpDajaNs');
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
 // Функция для отправки запроса в Gemini AI
-async function askGemini(prompt) {
+async function askGemini(prompt: string) {
     try {
         const result = await model.generateContent([prompt]);
         return result.response.text();
@@ -14,7 +14,7 @@ async function askGemini(prompt) {
     }
 }
 
-export async function POST(req) {
+export async function POST(req: Request) {
     const { message } = await req.json();
 
     if(!message) {
