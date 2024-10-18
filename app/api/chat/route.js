@@ -4,7 +4,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
 // Функция для отправки запроса в Gemini AI
-async function askGemini(prompt: string) {
+async function askGemini(prompt) {
     try {
         const result = await model.generateContent([prompt]);
         return result.response.text();
@@ -14,7 +14,7 @@ async function askGemini(prompt: string) {
     }
 }
 
-export async function POST(req: Request) {
+export async function POST(req) {
     const { message } = await req.json();
 
     if(!message) {
