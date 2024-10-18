@@ -31,6 +31,7 @@ export async function POST(req) {
             { status: 200 }
         );
     } catch(ex) {
+        console.log(ex);
         console.error('Error fetching from Gemini API');
         return new Response(
             JSON.stringify({error: "Failed to get a response from Gemini API"}),
