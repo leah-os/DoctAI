@@ -24,6 +24,7 @@ async function askGemini(prompt, genPart) {
             return result.response.text();
         }
         const result = await model.generateContent([prompt]);
+        return result.response.text();
     } catch (error) {
         console.error('Ошибка при запросе к Gemini AI:', error); // Полное сообщение об ошибке
         return 'Не удалось получить ответ. Попробуйте еще раз.';
