@@ -3,8 +3,17 @@
 import { useState } from "react";
 
 export default function ChatBot() {
+  const [file, setFile] = useState(null);
   const [message, setMessage] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
+
+
+  const handleFileChange = (ev) => {
+    if(ev.target.files) {
+      setFile(ev.target.files[0]);
+      console.log(ev.target.files[0].type);
+    }
+  }
 
   const handleSendMessage = async () => {
     if (!message.trim()) return;
@@ -12,15 +21,19 @@ export default function ChatBot() {
     // Добавляем сообщение пользователя в чат
     setChatHistory([...chatHistory, { text: message, sender: "user" }]);
     setMessage("");
+    setFile(null);
 
     try {
       // Отправляем запрос на сервер
+      const formData = new FormData();
+      if(file) {
+        formData.append('file',  file)
+      }
+      formData.append('text', message);
+
       const response = await fetch("/api/chat", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ message }),
+        body: formData,
       });
 
       const data = await response.json();
@@ -44,12 +57,16 @@ export default function ChatBot() {
           </div>
         ))}
       </div>
+      
       <input
         type="text"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         placeholder="Type your message"
       />
+
+      <input type="file" onChange={handleFileChange}/>
+
       <button onClick={handleSendMessage}>Send</button>
     </div>
   );
