@@ -1,6 +1,6 @@
-
 import localFont from "next/font/local";
 import "./globals.css";
+import { AccessibilityProvider } from "../context/AccessibilityContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -13,17 +13,13 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-
-
-export default function RootLayout({
-  children,
-}) {
+export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <AccessibilityProvider>{children}</AccessibilityProvider>
       </body>
     </html>
   );
