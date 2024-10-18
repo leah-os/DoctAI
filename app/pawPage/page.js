@@ -66,7 +66,7 @@ export default function Home() {
         {isCardSectionVisible && (
           <div className="text-center mt-8">
             <img src="/logo.png" alt="DoctAi Logo" className="h-16 w-16 mx-auto my-10" />
-            <h1 className="text-2xl font-semibold">Какое место болит у вашего животного?</h1>
+            <h1 className="text-2xl font-semibold">Могу я тебе чем-нибудь помочь?</h1>
             <div className="grid lg:grid-cols-3 grid-cols-1 justify-center mt-6 gap-4">
               {cardData.map((card, index) => (
                 <Card 

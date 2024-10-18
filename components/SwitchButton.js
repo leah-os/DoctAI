@@ -1,19 +1,20 @@
 "use client"
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+
+import { useRouter, usePathname } from 'next/navigation';
 
 export default function SwitchButton() {
-  const [isPaw, setIsPaw] = useState(false);
   const router = useRouter();
 
+  const pathname = usePathname();
   const handleSwitch = () => {
-    setIsPaw(!isPaw);
-    if (!isPaw) {
+    if (pathname === '/') {
       router.push('/pawPage');
-    } else {
+    } else if(pathname === '/pawPage') {
       router.push('/');
     }
   };
+
+  const isPaw = (pathname === '/pawPage');
 
   return (
     <div className="flex items-center justify-center p-4">

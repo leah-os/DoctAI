@@ -1,34 +1,38 @@
-"use client";
-import { useState } from 'react';
-import Header from '../components/Header';
-import Card from '../components/Card';
-import cardData from '../data/cards.json';
-import Chat from '../components/Chat';
+'use client';  
+import Image from "next/image";
+import { useState } from "react";
+import ReactMarkdown from 'react-markdown';
 
-export default function Home() {
-  const [isCardSectionVisible, setIsCardSectionVisible] = useState(true);
-  const [chatHistory, setChatHistory] = useState([]);
+export default function Chat({ onQuestionAsked }) {  
   const [message, setMessage] = useState("");
+  const [chatHistory, setChatHistory] = useState([]);
+  const [isNewChat, setIsNewChat] = useState(false);
+  const [file, setFile] = useState(null);
 
-  const handleQuestionAsked = () => {
-    setIsCardSectionVisible(false);
-  };
-
-  const handleCardClick = (question) => {
-    console.log("Card clicked, question:", question);
-    setMessage(question);
-    handleQuestionAsked();
-  };
+  function handleFileChange(event) {
+    if (event.target.files && event.target.files[0]) {
+      setFile(event.target.files[0]);
+    }
+  }
 
   const handleSendMessage = async () => {
-    if (!message.trim()) return;
+    if (!message.trim() && !file) return; // Проверка на пустое сообщение и файл
+    
+  
 
-    setChatHistory((prevHistory) => [...prevHistory, { text: message, sender: "user" }]);
+    // Добавляем сообщение пользователя в историю чата
+    if (message.trim()) {
+      setChatHistory((prevHistory) => [...prevHistory, { text: message, sender: "user" }]);
+    }
 
     const formData = new FormData();
     formData.append('text', message);
+    if (file) {
+      formData.append('file', file);
+    }
 
-    setMessage("");
+    setMessage(""); 
+    setFile(null); // Очищаем выбранный файл после отправки
 
     try {
       const response = await fetch("/api/chat", {
@@ -37,7 +41,8 @@ export default function Home() {
       });
 
       const data = await response.json();
-      
+
+      // Добавляем ответ бота в историю чата
       setChatHistory((prevHistory) => [
         ...prevHistory,
         { text: data.reply, sender: "bot" },
@@ -51,39 +56,59 @@ export default function Home() {
     }
   };
 
-  const handleShowCards = () => {
-    console.log("Showing card section");
-    setIsCardSectionVisible(true);
-    setChatHistory([]); // Очищаем историю чата при показе карточек
+  const handleNewChat = () => {
+    setChatHistory([]); 
+    setIsNewChat(true); 
+  };
+
+  // Обработчик события клавиатуры
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault(); // Предотвращаем перенос строки
+      handleSendMessage(); // Отправляем сообщение
+    }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-100 via-pink-100 to-purple-100 flex flex-col items-center">
-      <Header />
-      <div>
-        {isCardSectionVisible && (
-          <div className="text-center mt-8">
-            <img src="/logo.png" alt="DoctAi Logo" className="h-16 w-16 mx-auto my-10" />
-            <h1 className="text-2xl font-semibold">Могу я тебе чем-нибудь помочь?</h1>
-            <div className="flex justify-center mt-6 gap-4">
-              {cardData.map((card, index) => (
-                <Card 
-                  key={index} 
-                  title={card.title} 
-                  icon={card.icon} 
-                  onClick={() => handleCardClick(card.title)} 
-                />
-              ))}
-            </div>
+    <div className="flex flex-col justify-between">
+      <div className="overflow-scroll px-4 py-2">
+        {chatHistory.map((msg, index) => (
+          <div key={index} className={`mb-2 flex items-center ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
+            {msg.sender === "bot" && (
+              <Image src="/logo.png" alt="Bot Logo" className="h-8 w-8 mr-2" width={42} height={42} />
+            )}
+            <p className={`inline-block px-4 py-2 rounded-lg ${
+              msg.sender === "user" ? "bg-blue-100 text-blue-900" : "bg-gray-100 text-gray-900"
+            }`}>
+              <ReactMarkdown>{msg.text}</ReactMarkdown>
+            </p>
           </div>
-        )}
-        <Chat 
-          onShowCards={handleShowCards} 
-          chatHistory={chatHistory} 
-          message={message} 
-          setMessage={setMessage} 
-          handleSendMessage={handleSendMessage} 
-        />
+        ))}
+      </div>
+
+      <div className="mt-4 w-full px-4">
+        <div className="flex items-center border border-gray-300 rounded-full px-4 py-2">
+          <button onClick={handleNewChat} className="">
+            <Image src="/new.png" alt="New Chat" className="h-8 w-8 mr-2" width={42} height={42}/>
+          </button>
+          <label>
+            <Image src="/link.png" alt="Link" className="h-8 w-8 mr-2" width={42} height={42}/>
+            <input type="file" onChange={handleFileChange} className="hidden" />
+          </label>
+          <input
+            type="text"
+            placeholder="Спрашивай, что хочешь..."
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            onKeyDown={handleKeyDown}
+            maxLength={1000} 
+            className="flex-grow ml-4 bg-transparent placeholder:text-gray-700 placeholder:text-opacity-50 focus:outline-none"
+          />
+          <p className="text-gray-400 ml-4">{message.length}/1000</p>
+          <button onClick={handleSendMessage} className="ml-4 text-white">
+            <Image src="/send.png" alt="Send" className="h-8 w-8" width={42} height={42}/>
+          </button>
+        </div>
       </div>
     </div>
   );
