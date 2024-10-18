@@ -1,13 +1,19 @@
 "use client"
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function SwitchButton() {
   const [isPaw, setIsPaw] = useState(false);
+  const router = useRouter();
 
   const handleSwitch = () => {
     setIsPaw(!isPaw);
-    // Add your page-switching logic here based on the state
-    // Example: router.push(isPaw ? '/userPage' : '/pawPage');
+    // Логика перехода на другую страницу
+    if (!isPaw) {
+      router.push('/pawPage');
+    } else {
+      router.push('/');
+    }
   };
 
   return (
