@@ -1,11 +1,13 @@
-export default function Card({ title, icon }) {
-    return (
-      <div className="bg-white shadow-md rounded-xl p-6 text-center cursor-pointer hover:bg-gray-100">
+import React from 'react';
 
-        <img src={icon} alt={`${title} Icon`} className="w-12 h-12 mx-auto mb-4" />
-        <h3 className="text-lg font-semibold">{title}</h3>
-        <p className="text-gray-500 mt-2">Щелкните</p>
-      </div>
-    );
-  }
-  
+export default function Card({ title, icon, onClick }) {
+  return (
+    <div 
+      onClick={onClick} 
+      className="cursor-pointer border rounded-lg shadow p-4 flex items-center gap-2 hover:bg-gray-100 transition"
+    >
+      <img src={icon} alt={title} className="h-8 w-8" />
+      <span className="font-semibold">{title}</span>
+    </div>
+  );
+}
