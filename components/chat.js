@@ -82,7 +82,7 @@ export default function Chat({ onQuestionAsked }) {
               <Image
                 src={botLogoSrc}
                 alt="Bot Logo"
-                className="h-8 w-8 mr-2"
+                className="h-8 w-8 mr-2 rounded-2xl"
                 width={42}
                 height={42}
               />
