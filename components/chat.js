@@ -77,38 +77,39 @@ export default function Chat({ message, setMessage }) {
 
   return (
     <div className="flex flex-col justify-between h-full">
-      <div className="px-4 py-2 h-full">
-        {chatHistory.map((msg, index) => (
-          <div
-            key={index}
-            className={`mb-2 flex items-center ${
-              msg.sender === "user" ? "justify-end" : "justify-start"
-            }`}
-          >
-            {msg.sender === "bot" && (
-              <Image
-                src={botLogoSrc}
-                alt="Bot Logo"
-                className="h-8 w-8 mr-2 rounded-2xl"
-                width={42}
-                height={42}
-              />
-            )}
-            <p
-              className={`inline-block px-4 py-2 rounded-lg ${
-                msg.sender === "user"
-                  ? "bg-blue-100 text-blue-900"
-                  : "bg-gray-100 text-gray-900"
-              }`}
-            >
-              <ReactMarkdown>{msg.text}</ReactMarkdown>
-            </p>
-          </div>
-        ))}
-      </div>
+     <div className="overflow-scroll px-4  py-2 max-h-[300px] my-5">
+  {chatHistory.map((msg, index) => (
+    <div
+      key={index}
+      className={`mb-2 flex items-center ${
+        msg.sender === "user" ? "justify-end" : "justify-start"
+      }`}
+    >
+      {msg.sender === "bot" && (
+        <Image
+          src={botLogoSrc}
+          alt="Bot Logo"
+          className="h-8 w-8 mr-2 rounded-2xl"
+          width={42}
+          height={42}
+        />
+      )}
+      <p
+        className={`inline-block px-4 py-2 rounded-lg ${
+          msg.sender === "user"
+            ? "bg-blue-100 text-blue-900"
+            : "bg-gray-100 text-gray-900"
+        }`}
+      >
+        <ReactMarkdown>{msg.text}</ReactMarkdown>
+      </p>
+    </div>
+  ))}
+</div>
 
-      <div className="mt-4 w-full px-4">
-        <div className="flex items-center border border-gray-300 rounded-full px-4 py-2">
+
+      <div className="mt-4 w-full px-4 sticky  bottom-5">
+        <div className="flex bg-white my-5 items-center border  border-gray-300 rounded-full px-4 py-2">
           <button onClick={handleNewChat} className="">
             <Image
               src="/new.png"
@@ -135,7 +136,7 @@ export default function Chat({ message, setMessage }) {
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={handleKeyDown}
             maxLength={1000}
-            className="flex-grow ml-4 bg-transparent placeholder:text-gray-700 placeholder:text-opacity-50 focus:outline-none"
+            className="flex-grow ml-4 bg-white placeholder:text-gray-700 placeholder:text-opacity-50 focus:outline-none"
           />
           <p className="text-gray-400 ml-4">{message.length}/1000</p>
           <button onClick={handleSendMessage} className="ml-4 text-white">
