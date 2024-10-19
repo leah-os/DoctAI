@@ -12,8 +12,13 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      backgroundColor: {
+        paw: "#4A5568", 
+        user: "#2D3748", 
+      },
     },
   },
   plugins: [],
 };
+
 export default config;
