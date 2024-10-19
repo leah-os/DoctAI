@@ -173,7 +173,7 @@ export default function Chat({ message, setMessage, isCardSectionVisible, setIsC
               onChange={(e) => setMessage(e.target.value)}
               onKeyDown={handleKeyDown}
               maxLength={1000}
-              className="w-full bg-white placeholder:text-gray-700 placeholder:text-opacity-50 focus:outline-none"
+              className="w-full text-black bg-white placeholder:text-gray-700 placeholder:text-opacity-50 focus:outline-none"
             />
           </div>
 
