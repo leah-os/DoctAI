@@ -1,7 +1,6 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { OpenAI } from 'openai';
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+const openai = new OpenAI({apiKey: process.env.OPENAI_API_KEY});
 
 async function fileToGenerativePart(file) {
     if(!file) return null;
@@ -20,11 +19,27 @@ async function fileToGenerativePart(file) {
 async function askGemini(prompt, genPart) {
     try {
         if(genPart) {
-            const result = await model.generateContent([prompt, genPart]);
-            return result.response.text();
+            console.log(genPart.inlineData.mimeType);
+            console.log(genPart.inlineData.data);
+            const response = await openai.chat.completions.create({
+                model: 'gpt-3.5-turbo',
+                messages: [
+                    { role: 'user', content: prompt },
+                    { 
+                        role: 'user',
+                        mimeType: genPart.inlineData.mimeType,
+                        content: genPart.inlineData.data 
+                    }
+                ],
+            });
+
+            return response.choices[0].message.content;
         }
-        const result = await model.generateContent([prompt]);
-        return result.response.text();
+        const response = await openai.chat.completions.create({
+            model: 'gpt-3.5-turbo',
+            messages: [{ role: 'user', content: prompt }],
+        });
+        return response.choices[0].message.content;
     } catch (error) {
         console.error('Ошибка при запросе к Gemini AI:', error); // Полное сообщение об ошибке
         return 'Не удалось получить ответ. Попробуйте еще раз.';
