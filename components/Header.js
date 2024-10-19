@@ -45,10 +45,12 @@ export default function Header() {
           <button onClick={toggleAccessibilityMode}>
             {" "}
          
-            <img
+            <Image
               src="/eye.png"
               alt="Eye Icon"
               className="h-8 w-8 mr-2 cursor-pointer"
+              width={32}
+              height={32}
               onClick={handleEyeClick}
             />
            
