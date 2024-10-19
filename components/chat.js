@@ -5,7 +5,7 @@ import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 
 
-export default function Chat({ message, setMessage }) {  
+export default function Chat({ message, setMessage, isCardSectionVisible, setIsCardSectionVisible }) {  
 
   const [chatHistory, setChatHistory] = useState([]);
   const [isNewChat, setIsNewChat] = useState(false);
@@ -35,6 +35,8 @@ export default function Chat({ message, setMessage }) {
 
   const handleSendMessage = async () => {
     if (!message.trim() && !file) return;
+
+    setIsCardSectionVisible(false);
 
     if (message.trim()) {
       setChatHistory((prevHistory) => [
@@ -86,6 +88,7 @@ export default function Chat({ message, setMessage }) {
     setFile(null);
     setFilePreview(null);
     setIsNewChat(true);
+    setIsCardSectionVisible(true);
   };
 
   const handleKeyDown = (e) => {
@@ -97,7 +100,7 @@ export default function Chat({ message, setMessage }) {
 
   return (
     <div className="flex flex-col justify-between h-full">
-      <div className="overflow-scroll px-4 py-2 max-h-[300px] my-5">
+      <div className="overflow-scroll px-4 py-2 lg:max-h-[700px] max-h-full my-5">
         {chatHistory.map((msg, index) => (
           <div
             key={index}
