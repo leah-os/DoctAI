@@ -31,9 +31,9 @@ _DoctAI_ — это интеллектуальная система поддер
 ![Главный экран](https://github.com/leah-os/DoctAI/blob/main/public/people-page.png?raw=true)
 
 
-### Чат
+###  💬 Чат
 
-![Чат](./screenshots/chat-screen.png)
+![Чат](https://github.com/leah-os/DoctAI/blob/main/public/question.png?raw=true)
 
 ## 📦 Установка
 
