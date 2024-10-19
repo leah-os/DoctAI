@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import Card from "../components/Card";
 import cardData from "../data/cards.json";
 import Chat from "../components/Chat";
+import { useAccessibility } from "../context/AccessibilityContext";
 
 export default function Home() {
   const [isCardSectionVisible, setIsCardSectionVisible] = useState(true);
@@ -24,8 +25,14 @@ export default function Home() {
     setIsCardSectionVisible(true); // Показываем карточки
   };
 
+  const { isAccessibilityMode } = useAccessibility();
+
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-100 via-pink-100 to-purple-100 flex flex-col items-center">
+    <div
+      className={`min-h-screen bg-gradient-to-r from-blue-100 via-pink-100 to-purple-100 flex flex-col items-center ${
+        isAccessibilityMode ? "grayscale text-3xl" : "grayscale-0"
+      }`}
+    >
       <Header />
       <div>
         {isCardSectionVisible && (
