@@ -13,8 +13,8 @@ const config: Config = {
         foreground: "var(--foreground)",
       },
       backgroundColor: {
-        paw: "#4A5568",  // Custom color for paw
-        user: "#2D3748", // Custom color for user
+        paw: "#4A5568", 
+        user: "#2D3748", 
       },
     },
   },
