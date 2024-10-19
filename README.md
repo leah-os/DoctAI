@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DoctAI
 
-## Getting Started
+![DoctAI Logo](./public/logouser.png)
 
-First, run the development server:
+_DoctAI_ — это интеллектуальная система поддержки медицинских консультаций, которая помогает пользователям получать ответы на медицинские вопросы с помощью удобного чата. Проект разработан с использованием **Next.js**, **Tailwind CSS** и **React**.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Функциональность
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Интерактивный чат**: Возможность задать вопрос и получить ответы через удобный интерфейс.
+- **Адаптивный дизайн**: Приложение адаптируется под разные устройства.
+- **Доступность**: Реализована поддержка для людей с ограниченными возможностями (режим Accessibility).
+- **Карточки помощи**: Быстрый выбор из предложенных вопросов.
+- **Липкий заголовок и чат**: Компоненты заголовка и чата всегда видны при прокрутке.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠 Технологии
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Проект построен с использованием следующих технологий:
 
-## Learn More
+- [Next.js](https://nextjs.org/) - React framework для серверной и клиентской рендеринга.
+- [Tailwind CSS](https://tailwindcss.com/) - Утилитарный CSS-фреймворк для стилизации.
+- [React](https://reactjs.org/) - JavaScript-библиотека для создания пользовательских интерфейсов.
+- [Accessibility](https://www.w3.org/WAI/) - Встроенная поддержка для людей с ограниченными возможностями.
 
-To learn more about Next.js, take a look at the following resources:
+## 📸 Скриншоты
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Главный экран
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+![Главный экран](./screenshots/main-screen.png)
 
-## Deploy on Vercel
+### Чат
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+![Чат](./screenshots/chat-screen.png)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📦 Установка
+
+Для локальной установки выполните следующие шаги:
+
+1. Клонируйте репозиторий:
+   ```bash
+   git clone https://github.com/yourusername/doctai.git
