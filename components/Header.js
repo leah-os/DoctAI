@@ -40,18 +40,18 @@ export default function Header() {
           <h1 className="text-xl font-bold">DoctAi</h1>
         </div>
 
-        {/* Иконка глаза с обработчиком клика */}
+  
         <div className="relative">
           <button onClick={toggleAccessibilityMode}>
             {" "}
-            {/* Контейнер для относительного позиционирования */}
+         
             <img
               src="/eye.png"
               alt="Eye Icon"
               className="h-8 w-8 mr-2 cursor-pointer"
-              onClick={handleEyeClick} // Обрабатываем клик
+              onClick={handleEyeClick}
             />
-            {/* Баннер для слабовидящих */}
+           
             {showBanner && (
               <div className="absolute top-10 right-0 bg-gray-200 text-black p-2 rounded-lg shadow-lg z-10 ">
                 <p className="text-sm font-medium">

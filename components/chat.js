@@ -65,7 +65,7 @@ export default function Chat({ message, setMessage }) {
     setMessage("");
     setFile(null);
     setIsNewChat(true);
-    onQuestionAsked();
+
   };
 
   const handleKeyDown = (e) => {
