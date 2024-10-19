@@ -35,6 +35,13 @@
 
 ![Чат](https://github.com/leah-os/DoctAI/blob/main/public/question.png?raw=true)
 
+
+### 🧑‍🦯 Функция для слабовидящих
+
+ ![Accessibility](https://github.com/leah-os/DoctAI/blob/main/public/accessabillity.png?raw=true)
+
+
+
 ## 📦 Установка
 
 Для локальной установки выполните следующие шаги:
