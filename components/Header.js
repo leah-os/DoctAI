@@ -25,10 +25,10 @@ export default function Header() {
   return (
     <div
       className={`w-full py-4 bg-transparent flex flex-col items-center  ${
-        isAccessibilityMode ? "grayscale bg-black" : "grayscale-0"
+        isAccessibilityMode ? "grayscale bg-black " : "grayscale-0 "
       }`}
     >
-      <div className="w-full flex justify-between items-center px-20">
+      <div className="w-full flex justify-between items-center lg:px-20 px-5">
         <div className="flex items-center">
           <Image
             src={logoSrc}
