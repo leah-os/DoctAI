@@ -17,7 +17,6 @@ export default function Home() {
   const handleCardClick = (question) => {
     console.log("Card clicked, question:", question); // Логируем вопрос
     setMessage(question); // Устанавливаем текст вопроса в инпут
-    handleQuestionAsked(); // Скрываем карточки
   };
 
  
