@@ -1,5 +1,4 @@
 "use client"; // Клиентский компонент
-import { usePathname } from "next/navigation";
 import { useState } from "react";
 import SwitchButton from "./SwitchButton";
 import Image from "next/image";
@@ -18,9 +17,7 @@ export default function Header() {
 
   const { isAccessibilityMode, setAccessibilityMode } = useAccessibility();
 
-  const pathname = usePathname();
-
-  const logoSrc = pathname === "/pawPage" ? "/logopaw.png" : "/logouser.png";
+  const logoSrc = "/logo.png";
 
   return (
     <div
