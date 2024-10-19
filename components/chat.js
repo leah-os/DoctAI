@@ -4,8 +4,9 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 
-export default function Chat({ onQuestionAsked }) {
-  const [message, setMessage] = useState("");
+
+export default function Chat({ message, setMessage }) {  
+
   const [chatHistory, setChatHistory] = useState([]);
   const [isNewChat, setIsNewChat] = useState(false);
   const [file, setFile] = useState(null);

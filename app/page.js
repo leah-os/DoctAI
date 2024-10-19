@@ -57,9 +57,8 @@ export default function Home() {
             </div>
           </div>
         )}
-        <Chat
-          onShowCards={handleShowCards} // Передаем функцию для показа карточек
-          chatHistory={chatHistory} // Передаем историю чата
+
+        <Chat 
           message={message} // Передаем текущее сообщение в Chat
           setMessage={setMessage}
         />
