@@ -40,4 +40,8 @@ _DoctAI_ — это интеллектуальная система поддер
 Для локальной установки выполните следующие шаги:
 
 1. Клонируйте репозиторий:
-   git clone https://github.com/yourusername/doctai.git
+   git clone https://github.com/leah-os/DoctAI.git
+2.  Установите зависемости:
+   npm install или yarr install
+3. Запустите проект:
+   npm run dev или yarn run dev
