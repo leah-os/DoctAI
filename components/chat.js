@@ -10,13 +10,26 @@ export default function Chat({ message, setMessage }) {
   const [chatHistory, setChatHistory] = useState([]);
   const [isNewChat, setIsNewChat] = useState(false);
   const [file, setFile] = useState(null);
+  const [filePreview, setFilePreview] = useState(null); // Для отображения файла
 
   const pathname = usePathname();
   const botLogoSrc = pathname === "/pawPage" ? "/logopaw.png" : "/logouser.png";
 
   function handleFileChange(event) {
     if (event.target.files && event.target.files[0]) {
-      setFile(event.target.files[0]);
+      const selectedFile = event.target.files[0];
+      setFile(selectedFile);
+
+      // Если это изображение, показываем его предварительный просмотр
+      if (selectedFile.type.startsWith("image/")) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setFilePreview(reader.result); // Сохраняем превью изображения
+        };
+        reader.readAsDataURL(selectedFile);
+      } else {
+        setFilePreview(selectedFile.name); // Отображаем имя файла, если это не изображение
+      }
     }
   }
 
@@ -34,10 +47,17 @@ export default function Chat({ message, setMessage }) {
     formData.append("text", message);
     if (file) {
       formData.append("file", file);
+      
+      // Добавляем файл в чат
+      setChatHistory((prevHistory) => [
+        ...prevHistory,
+        { text: filePreview, sender: "user", isFile: true },
+      ]);
     }
 
     setMessage("");
     setFile(null);
+    setFilePreview(null);
 
     try {
       const response = await fetch("/api/chat", {
@@ -64,8 +84,8 @@ export default function Chat({ message, setMessage }) {
     setChatHistory([]);
     setMessage("");
     setFile(null);
+    setFilePreview(null);
     setIsNewChat(true);
-
   };
 
   const handleKeyDown = (e) => {
@@ -77,39 +97,42 @@ export default function Chat({ message, setMessage }) {
 
   return (
     <div className="flex flex-col justify-between h-full">
-     <div className="overflow-scroll px-4  py-2 max-h-[300px] my-5">
-  {chatHistory.map((msg, index) => (
-    <div
-      key={index}
-      className={`mb-2 flex items-center ${
-        msg.sender === "user" ? "justify-end" : "justify-start"
-      }`}
-    >
-      {msg.sender === "bot" && (
-        <Image
-          src={botLogoSrc}
-          alt="Bot Logo"
-          className="h-8 w-8 mr-2 rounded-2xl"
-          width={42}
-          height={42}
-        />
-      )}
-      <p
-        className={`inline-block px-4 py-2 rounded-lg ${
-          msg.sender === "user"
-            ? "bg-blue-100 text-blue-900"
-            : "bg-gray-100 text-gray-900"
-        }`}
-      >
-        <ReactMarkdown>{msg.text}</ReactMarkdown>
-      </p>
-    </div>
-  ))}
-</div>
+      <div className="overflow-scroll px-4 py-2 max-h-[300px] my-5">
+        {chatHistory.map((msg, index) => (
+          <div
+            key={index}
+            className={`mb-2 flex items-center ${
+              msg.sender === "user" ? "justify-end" : "justify-start"
+            }`}
+          >
+            {msg.sender === "bot" && (
+              <Image
+                src={botLogoSrc}
+                alt="Bot Logo"
+                className="h-8 w-8 mr-2 rounded-2xl"
+                width={42}
+                height={42}
+              />
+            )}
+            <p
+              className={`inline-block px-4 py-2 rounded-lg ${
+                msg.sender === "user"
+                  ? "bg-blue-100 text-blue-900"
+                  : "bg-gray-100 text-gray-900"
+              }`}
+            >
+              {msg.isFile ? (
+                <>{msg.text.startsWith("data:image/") ? <img src={msg.text} alt="uploaded" className="w-20 h-20 object-cover" /> : msg.text}</>
+              ) : (
+                <ReactMarkdown>{msg.text}</ReactMarkdown>
+              )}
+            </p>
+          </div>
+        ))}
+      </div>
 
-
-      <div className="mt-4 w-full px-4 sticky  bottom-5">
-        <div className="flex bg-white my-5 items-center border  border-gray-300 rounded-full px-4 py-2">
+      <div className="mt-4 w-full px-4 sticky bottom-5">
+        <div className="flex bg-white my-5 items-center border border-gray-300 rounded-full px-4 py-2">
           <button onClick={handleNewChat} className="">
             <Image
               src="/new.png"
@@ -129,15 +152,28 @@ export default function Chat({ message, setMessage }) {
             />
             <input type="file" onChange={handleFileChange} className="hidden" />
           </label>
-          <input
-            type="text"
-            placeholder="Спрашивай, что хочешь..."
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            onKeyDown={handleKeyDown}
-            maxLength={1000}
-            className="flex-grow ml-4 bg-white placeholder:text-gray-700 placeholder:text-opacity-50 focus:outline-none"
-          />
+
+          <div className="flex-grow ml-4">
+            {filePreview && (
+              <div className="mb-2">
+                {filePreview.startsWith("data:image/") ? (
+                  <img src={filePreview} alt="Preview" className="w-16 h-16 object-cover" />
+                ) : (
+                  <p>{filePreview}</p>
+                )}
+              </div>
+            )}
+            <input
+              type="text"
+              placeholder="Спрашивай, что хочешь..."
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyDown={handleKeyDown}
+              maxLength={1000}
+              className="w-full bg-white placeholder:text-gray-700 placeholder:text-opacity-50 focus:outline-none"
+            />
+          </div>
+
           <p className="text-gray-400 ml-4">{message.length}/1000</p>
           <button onClick={handleSendMessage} className="ml-4 text-white">
             <Image
