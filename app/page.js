@@ -9,13 +9,13 @@ import Image from 'next/image'
 
 export default function Home() {
   const [isCardSectionVisible, setIsCardSectionVisible] = useState(true);
-  const [message, setMessage] = useState(""); // Состояние для ввода сообщения
+  const [userInput, setUserInput] = useState("");
 
   const { isAccessibilityMode } = useAccessibility();
 
   const handleCardClick = (question) => {
     console.log("Card clicked, question:", question); // Логируем вопрос
-    setMessage(question); // Устанавливаем текст вопроса в инпут
+    setUserInput(question); // Устанавливаем текст вопроса в инпут
   };
 
   return (
@@ -44,8 +44,8 @@ export default function Home() {
         )}
       </div>
       <Chat 
-        message={message} // Передаем текущее сообщение в Chat
-        setMessage={setMessage}
+        userInput={userInput} // Передаем текущее сообщение в Chat
+        setUserInput={setUserInput}
         setIsCardSectionVisible={setIsCardSectionVisible}
         className="fixed bottom-4 right-4" // Примените фиксированное положение
       />

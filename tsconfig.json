@@ -21,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/page.js", "app/layout.js", "app/api/chat/route.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/page.js", "app/layout.js", "app/api/chat/route.js", "app/openai.js", "app/assistant-config.js", "app/api/assistants/threads/[threadId]/messages/route.js", "app/api/assistants/threads/route.js", "app/api/assistants/threads/[threadId]/actions/route.js", "components/Chat.js"],
   "exclude": ["node_modules"]
 }

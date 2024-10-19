@@ -10,13 +10,13 @@ import Image from 'next/image'
 
 export default function Home() {
   const [isCardSectionVisible, setIsCardSectionVisible] = useState(true);
-  const [message, setMessage] = useState(""); // Состояние для ввода сообщения
+  const [userInput, setUserInput] = useState("");  // Состояние для ввода сообщения
 
   const { isAccessibilityMode } = useAccessibility();
 
   const handleCardClick = (question) => {
     console.log("Card clicked, question:", question); // Логируем вопрос
-    setMessage(question); // Устанавливаем текст вопроса в инпут
+    setUserInput(question); // Устанавливаем текст вопроса в инпут
   };
 
   return (
@@ -26,7 +26,7 @@ export default function Home() {
     }`}
   >
       <Header />
-      <div className="flex-grow"> {/* Убедитесь, что этот div заполняет пространство */}
+      <div className="flex-grow">
         {isCardSectionVisible && (
           <div className="text-center mt-8">
             <Image src="/logopaw.png" alt="DoctAi Logo" className="h-16 w-16 rounded-2xl mx-auto my-10" width={64} height={64} />
@@ -45,8 +45,8 @@ export default function Home() {
         )}
       </div>
       <Chat 
-        message={message} // Передаем текущее сообщение в Chat
-        setMessage={setMessage}
+        userInput={userInput} // Передаем текущее сообщение в Chat
+        setUserInput={setUserInput}
         setIsCardSectionVisible={setIsCardSectionVisible}
         className="fixed bottom-4 right-4" // Примените фиксированное положение
       />
