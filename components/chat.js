@@ -5,10 +5,9 @@ import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 
 
-export default function Chat({ message, setMessage, isCardSectionVisible, setIsCardSectionVisible }) {  
+export default function Chat({ message, setMessage, setIsCardSectionVisible }) {  
 
   const [chatHistory, setChatHistory] = useState([]);
-  const [isNewChat, setIsNewChat] = useState(false);
   const [file, setFile] = useState(null);
   const [filePreview, setFilePreview] = useState(null); // Для отображения файла
 
@@ -87,7 +86,6 @@ export default function Chat({ message, setMessage, isCardSectionVisible, setIsC
     setMessage("");
     setFile(null);
     setFilePreview(null);
-    setIsNewChat(true);
     setIsCardSectionVisible(true);
   };
 
@@ -125,7 +123,7 @@ export default function Chat({ message, setMessage, isCardSectionVisible, setIsC
               }`}
             >
               {msg.isFile ? (
-                <>{msg.text.startsWith("data:image/") ? <img src={msg.text} alt="uploaded" className="w-20 h-20 object-cover" /> : msg.text}</>
+                <>{msg.text.startsWith("data:image/") ? <Image src={msg.text} alt="uploaded" className="w-20 h-20 object-cover" width={80} height={80}/> : msg.text}</>
               ) : (
                 <ReactMarkdown>{msg.text}</ReactMarkdown>
               )}
@@ -160,7 +158,7 @@ export default function Chat({ message, setMessage, isCardSectionVisible, setIsC
             {filePreview && (
               <div className="mb-2">
                 {filePreview.startsWith("data:image/") ? (
-                  <img src={filePreview} alt="Preview" className="w-16 h-16 object-cover" />
+                  <Image src={filePreview} alt="Preview" className="w-16 h-16 object-cover" width={64} height={64} />
                 ) : (
                   <p>{filePreview}</p>
                 )}
