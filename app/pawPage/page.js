@@ -3,7 +3,7 @@ import { useState } from "react";
 import Header from "@/components/Header";
 import Card from "@/components/Card";
 import cardData from "@/data/cards.json";
-import Chat from "@/components/chat";
+import Chat from "@/components/Chat";
 import { useAccessibility } from "../../context/AccessibilityContext";
 import Image from 'next/image'
 
