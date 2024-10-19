@@ -1,5 +1,6 @@
 'use client';  
 import Image from "next/image";
+import { usePathname } from 'next/navigation';
 import { useState } from "react";
 import ReactMarkdown from 'react-markdown';
 
@@ -9,6 +10,9 @@ export default function Chat({ onQuestionAsked }) {
   const [isNewChat, setIsNewChat] = useState(false);
   const [file, setFile] = useState(null);
 
+  const pathname = usePathname(); 
+  const botLogoSrc = pathname === '/pawPage' ? '/logopaw.png' : '/logouser.png'; 
+
   function handleFileChange(event) {
     if (event.target.files && event.target.files[0]) {
       setFile(event.target.files[0]);
@@ -16,11 +20,8 @@ export default function Chat({ onQuestionAsked }) {
   }
 
   const handleSendMessage = async () => {
-    if (!message.trim() && !file) return; // Проверка на пустое сообщение и файл
-    
-  
+    if (!message.trim() && !file) return; 
 
-    // Добавляем сообщение пользователя в историю чата
     if (message.trim()) {
       setChatHistory((prevHistory) => [...prevHistory, { text: message, sender: "user" }]);
     }
@@ -32,7 +33,7 @@ export default function Chat({ onQuestionAsked }) {
     }
 
     setMessage(""); 
-    setFile(null); // Очищаем выбранный файл после отправки
+    setFile(null); 
 
     try {
       const response = await fetch("/api/chat", {
@@ -42,7 +43,7 @@ export default function Chat({ onQuestionAsked }) {
 
       const data = await response.json();
 
-      // Добавляем ответ бота в историю чата
+    
       setChatHistory((prevHistory) => [
         ...prevHistory,
         { text: data.reply, sender: "bot" },
@@ -58,24 +59,33 @@ export default function Chat({ onQuestionAsked }) {
 
   const handleNewChat = () => {
     setChatHistory([]); 
+    setMessage(""); 
+    setFile(null); 
     setIsNewChat(true); 
+    onQuestionAsked(); 
   };
 
-  // Обработчик события клавиатуры
+
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      e.preventDefault(); // Предотвращаем перенос строки
-      handleSendMessage(); // Отправляем сообщение
+      e.preventDefault();
+      handleSendMessage(); 
     }
   };
 
   return (
-    <div className="flex flex-col justify-between">
-      <div className="overflow-scroll px-4 py-2">
+    <div className="flex flex-col justify-between h-full">
+      <div className="overflow-scroll px-4 py-2 h-full">
         {chatHistory.map((msg, index) => (
           <div key={index} className={`mb-2 flex items-center ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
             {msg.sender === "bot" && (
-              <Image src="/logo.png" alt="Bot Logo" className="h-8 w-8 mr-2" width={42} height={42} />
+              <Image
+                src={botLogoSrc}
+                alt="Bot Logo"
+                className="h-8 w-8 mr-2"
+                width={42}
+                height={42}
+              />
             )}
             <p className={`inline-block px-4 py-2 rounded-lg ${
               msg.sender === "user" ? "bg-blue-100 text-blue-900" : "bg-gray-100 text-gray-900"

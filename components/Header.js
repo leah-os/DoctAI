@@ -1,4 +1,5 @@
 "use client";  // Клиентский компонент
+import { usePathname } from 'next/navigation';
 
 import { useState } from "react";
 import SwitchButton from "./SwitchButton";
@@ -11,18 +12,24 @@ export default function Header() {
     setShowBanner(!showBanner); // Меняем состояние при клике на глаз
   };
 
+
+  const pathname = usePathname();
+
+  const logoSrc = pathname === '/pawPage' ? '/logopaw.png' : '/logouser.png';
+
+
   return (
     <div className="w-full py-4 bg-transparent flex flex-col items-center">
-      {/* Верхняя панель с логотипом и кнопками */}
+
       <div className="w-full flex justify-between items-center px-20">
         <div className="flex items-center">
-          <Image
-            src="/logo.png"
-            alt="DoctAi Logo"
-            className="h-8 w-8 mr-2"
-            width={42}
-            height={42}
-          />
+        <Image
+        src={logoSrc}
+        alt="DoctAi Logo"
+        className="h-12 w-12 mr-2 rounded-2xl"
+        width={42}
+        height={42}
+      />
           <h1 className="text-xl font-bold">DoctAi</h1>
         </div>
 

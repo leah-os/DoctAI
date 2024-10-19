@@ -20,40 +20,7 @@ export default function Home() {
     handleQuestionAsked(); // Скрываем карточки
   };
 
-  const handleSendMessage = async () => {
-    if (!message.trim()) return; // Проверка на пустое сообщение
-
-    // Добавляем сообщение пользователя в историю чата
-    setChatHistory((prevHistory) => [...prevHistory, { text: message, sender: "user" }]);
-    
-    const formData = new FormData();
-    formData.append('text', message); // Подготовка данных для отправки
-
-    // Очищаем поле ввода
-    setMessage(""); 
-
-    try {
-      // Отправка вопроса на сервер
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        body: formData,
-      });
-
-      const data = await response.json();
-      
-      // Добавляем ответ бота в историю чата
-      setChatHistory((prevHistory) => [
-        ...prevHistory,
-        { text: data.reply, sender: "bot" },
-      ]);
-    } catch (error) {
-      console.error("Ошибка:", error);
-      setChatHistory((prevHistory) => [
-        ...prevHistory,
-        { text: "Ошибка: не удалось отправить сообщение", sender: "bot" },
-      ]);
-    }
-  };
+ 
 
   const handleShowCards = () => {
     setIsCardSectionVisible(true); // Показываем карточки
@@ -65,7 +32,7 @@ export default function Home() {
       <div>
         {isCardSectionVisible && (
           <div className="text-center mt-8">
-            <img src="/logo.png" alt="DoctAi Logo" className="h-16 w-16 mx-auto my-10" />
+            <img src="/logouser.png" alt="DoctAi Logo" className="h-16 w-16 rounded-2xl mx-auto my-10" />
             <h1 className="text-2xl font-semibold">Могу я тебе чем-нибудь помочь?</h1>
             <div className="flex justify-center mt-6 gap-4">
               {cardData.map((card, index) => (
@@ -83,8 +50,7 @@ export default function Home() {
           onShowCards={handleShowCards} // Передаем функцию для показа карточек
           chatHistory={chatHistory} // Передаем историю чата
           message={message} // Передаем текущее сообщение в Chat
-          setMessage={setMessage} // Функция для обновления сообщения
-          handleSendMessage={handleSendMessage} // Функция для отправки сообщения
+          setMessage={setMessage} 
         />
       </div>
     </div>
