@@ -49,6 +49,6 @@
 1. Клонируйте репозиторий:
    git clone https://github.com/leah-os/DoctAI.git
 2.  Установите зависемости:
-   npm install или yarr install
+   npm install или yarn install
 3. Запустите проект:
    npm run dev или yarn run dev
